@@ -51,11 +51,6 @@ end
 cd() = cd(homedir())
 
 if is_windows()
-    @doc """
-        cd(f::Function, dir::AbstractString=homedir())
-
-    Temporarily changes the current working directory and applies function `f` before returning.
-    """ ->
     function cd(f::Function, dir::AbstractString)
         old = pwd()
         try
@@ -66,11 +61,6 @@ if is_windows()
         end
     end
 else
-    @doc """
-        cd(f::Function, dir::AbstractString=homedir())
-
-    Temporarily changes the current working directory and applies function `f` before returning.
-    """ ->
     function cd(f::Function, dir::AbstractString)
         fd = ccall(:open, Int32, (Cstring, Int32), :., 0)
         systemerror(:open, fd == -1)
@@ -83,6 +73,11 @@ else
         end
     end
 end
+"""
+    cd(f::Function, dir::AbstractString=homedir())
+
+Temporarily changes the current working directory and applies function `f` before returning.
+"""
 cd(f::Function) = cd(f, homedir())
 
 """
