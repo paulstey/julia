@@ -2722,20 +2722,12 @@ function inlineable(f::ANY, ft::ANY, e::Expr, atypes::Vector{Any}, sv::Inference
         end
     end
 
-    if !isempty(stmts)
-        if all(stmt -> (isa(stmt, Expr) && is_meta_expr(stmt::Expr)) || isa(stmt, LineNumberNode) || stmt === nothing,
-               stmts)
-            empty!(stmts)
-        else
-            local line::Int = linfo.def.line
-            if isa(stmts[1], LineNumberNode)
-                line = shift!(stmts).line
-            end
-            unshift!(stmts, Expr(:meta, :push_loc, linfo.def.file, linfo.def.name, line))
-            isa(stmts[end], LineNumberNode) && pop!(stmts)
-            push!(stmts, Expr(:meta, :pop_loc))
-        end
+    local line::Int = linfo.def.line
+    if !isempty(stmts) && isa(stmts[1], LineNumberNode)
+        line = (shift!(stmts)::LineNumberNode).line
     end
+    unshift!(stmts, Expr(:meta, :push_loc, linfo.def.file, linfo.def.name, line))
+    push!(stmts, Expr(:meta, :pop_loc))
     if !isempty(stmts) && !propagate_inbounds
         # avoid redundant inbounds annotations
         s_1, s_end = stmts[1], stmts[end]
