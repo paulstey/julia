@@ -110,7 +110,7 @@ Basic functions
        (iter.I[1],iter.I[2]) = (2,3)
        A[iter] = 0
 
-   If you supply more than one ``AbstractArray`` argument, ``eachindex`` will create an iterable object that is fast for all arguments (a ``UnitRange`` if all inputs have fast linear indexing, a ```CartesianRange`` <:obj`CartesianRange`>`_ otherwise). If the arrays have different sizes and/or dimensionalities, ``eachindex`` returns an iterable that spans the largest range along each dimension.
+   If you supply more than one ``AbstractArray`` argument, ``eachindex`` will create an iterable object that is fast for all arguments (a :obj:`UnitRange` if all inputs have fast linear indexing, a :obj:`CartesianRange` otherwise). If the arrays have different sizes and/or dimensionalities, ``eachindex`` returns an iterable that spans the largest range along each dimension.
 
 .. function:: linearindices(A)
 
