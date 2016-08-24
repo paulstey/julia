@@ -6,8 +6,9 @@
 """
     print(io::IO, x)
 
-Write (to the default output stream) a canonical (un-decorated) text
-representation of a value if there is one, otherwise call [`show`](:func:`show`).
+Write to `io` (or to the default output stream [`STDOUT`](:obj:`STDOUT`)
+if `io` is not given) a canonical (un-decorated) text representation
+of a value if there is one, otherwise call [`show`](:func:`show`).
 The representation used by `print` includes minimal formatting and tries to
 avoid Julia-specific details.
 """

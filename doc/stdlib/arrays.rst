@@ -312,7 +312,7 @@ Constructors
 
    .. Docstring generated from Julia source
 
-   Create an array filled with the value ``x``\ . For example, ``fill(1.0, (5,5))`` returns a 10×10 array of floats, with each element initialized to ``1.0``\ .
+   Create an array filled with the value ``x``\ . For example, ``fill(1.0, (5,5))`` returns a 5×5 array of floats, with each element initialized to ``1.0``\ .
 
    .. doctest::
 
