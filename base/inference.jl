@@ -1913,6 +1913,7 @@ function finish(me::InferenceState)
         gotoifnot_elim_pass!(me.linfo, me)
         inlining_pass!(me.linfo, me)
         inbounds_meta_elim_pass!(me.linfo.code)
+        void_use_elim_pass!(me.linfo, me)
         alloc_elim_pass!(me.linfo, me)
         getfield_elim_pass!(me.linfo, me)
         # remove placeholders
@@ -3207,6 +3208,19 @@ function occurs_outside_getfield(linfo::LambdaInfo, e::ANY, sym::ANY,
         end
     end
     return false
+end
+
+function void_use_elim_pass!(linfo::LambdaInfo, sv)
+    # Remove top level SSAValue and slots that is `!usedUndef`.
+    # Also remove some `nothing` while we are at it....
+    not_void_use = function (ex::ANY)
+        ex === nothing && return false
+        isa(ex, SSAValue) && return false
+        !isa(ex, Slot) && return true
+        return linfo.slotflags[(ex::Slot).id] & Slot_UsedUndef != 0
+    end
+    filter!(not_void_use, linfo.code::Array{Any,1})
+    return
 end
 
 # removes inbounds metadata if we never encounter an inbounds=true or
