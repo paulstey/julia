@@ -154,7 +154,7 @@ julia> join(["apples", "bananas", "pineapples"], ", ", " and ")
 ```
 
 `strings` can be any iterable over elements `x` which are convertible to strings
-via `print(io::IOBuffer, x)`.
+via `print(io::IOBuffer, x)`. `strings` will be printed to `io`.
 """
 function join(io::IO, strings, delim, last)
     i = start(strings)
