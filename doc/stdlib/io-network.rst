@@ -160,6 +160,14 @@ General I/O
 
    Read binary data from an I/O stream or file, filling in ``array``\ .
 
+.. function:: readbytes!(stream::IOStream, b::AbstractVector{UInt8}, nb=length(b); all::Bool=true)
+
+   .. Docstring generated from Julia source
+
+   Read at most ``nb`` bytes from ``stream`` into ``b``\ , returning the number of bytes read. The size of ``b`` will be increased if needed (i.e. if ``nb`` is greater than ``length(b)`` and enough bytes could be read), but it will never be decreased.
+
+   See :func:`read` for a description of the ``all`` option.
+
 .. function:: readbytes!(stream::IO, b::AbstractVector{UInt8}, nb=length(b))
 
    .. Docstring generated from Julia source
