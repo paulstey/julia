@@ -63,6 +63,10 @@ let AA = randn(2, 2)
             @test I*J === UniformScaling(λ)
             @test B*J == B*λ
             @test J*B == B*λ
+            @test I*A !== A # Don't alias
+            @test I*S !== S # Don't alias
+            @test A*I !== A # Don't alias
+            @test S*I !== S # Don't alias
 
             @test S*J == S*λ
             @test J*S == S*λ
